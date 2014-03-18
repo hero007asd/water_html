@@ -1,0 +1,244 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<!-- <script type="text/javascript" src="http://api.map.baidu.com/api?v=1.2"></script>  -->
+<!-- <script type="text/javascript" src="http://api.map.baidu.com/api?v=1.4"></script>  -->
+<script type="text/javascript" src="http://api.map.baidu.com/api?key=46ce9d0614bf7aefe0ba562f8cf87194&v=1.4&services=true"> </script>
+
+
+<script type="text/javascript" src="../../site_media/js/jquery.min.js"></script> 
+
+<title>水质检测</title>
+
+<style>
+ body,form,ul,li,a,ol,h1,h2,h3,h4,h5,h6,input,textarea,img{margin:0px;padding:0px;}  
+ul,li,dl{list-style-type:none;} 
+a{text-decoration: none;}
+body{font-size: 12px;font-family: "Microsoft YaHei";color:#777777; overflow:auto;background-color: #b0d7f9;}
+.w_div{width: 100%;height: 1000px; }
+.w_top{width: 100%;height: 50px;}
+.w_top h1{text-align: center;font-weight: bold;color: black;font-size: 36px;margin-top: 5px;}
+.w_content{width: 100%;height:auto;margin-top: 15px;m}
+.w_contentLeft{width: 55%; height: auto;float: left;margin-right: 20px;margin-left: 10px;float: left;}
+.w_contentRight{width: 38%;height: auto;float: left;margin: 0 50px 0 50px;}
+.w_logo{display: block;float: right;margin-top: -35px;margin-right: 30px;width: 70px;height: 40px;text-align: center;}
+.w_conTop{width: 100%;float: left;height: 800px;border: 1px solid blue;margin-bottom: 25px;}
+.w_conComm{width: 100%;height: auto;float: left;}
+.w_conComm input{display: block; width: 300px;height: 50px;float: left;margin-left: 20%;font-size: 22px;}
+.w_contentRight ul{width: 100%;height: 45px;}
+.w_contentRight li{float: left;text-align: center;width: 49%; height: 40px;background-color: #e5e5e5;border-right-color: black;}
+.w_contentRight a{color: black;font-size: 24px;}
+.w_conTab{width: 100%;height: auto;margin-top: 0px;}
+.w_conTab table{width: 100%;height: auto;text-align: center;border: 1px solid black;}
+.w_conTab table thead td{font-size: 22px;font-weight: 400;}
+.w_conTab table td{font-size: 17px; border: 1px solid black;}
+.w_conTab caption{font-size: 26px;}
+.col{background-color: blue;color: white;}
+.w_a{width: 100%;height: 35px;}
+.w_a a{display: block; float: left;width: 50%;text-align: center;background-color: #e5e5e5;}
+.w_a a:hover{background-color: white;color: black;}
+
+</style>
+
+
+<script type="text/javascript">
+
+$(document).ready(function(){
+	
+	/*设置表格样式(偶数奇数切换颜色)*/
+	$("#conTab").find("tr").css("background-color", "#f5f7ea");
+	$("#conTab").find("tr:odd").css("background-color", "#eee0a7");
+	
+// 	$(".w_contentRight a").hover(function(){
+// 		$(".w_contentRight a").parent().css("background-color", "blue");
+
+// 	});
+	
+	
+	});
+	
+</script>
+
+
+</head>
+<body>
+
+	<div class="w_div">
+		<div class="w_top"><h1>水质检测系统</h1><input type="button" name="logo" id="logo" value="登录" class="w_logo"/></div>
+		<div class="w_content">
+			<div class="w_contentLeft">
+				<div class="w_conTop" id="map"></div>
+			</div>
+			<div class="w_contentRight">
+			<div class="w_a"><a href="#">查看报表</a><a href="#">查看曲线图</a></div>
+<!-- 				<ul> -->
+<!-- 					<li><a href="#">查看报表</a></li> -->
+<!-- 					<li><a href="#">查看曲线图</a></li> -->
+<!-- 				</ul> -->
+			
+				<div class="w_conTab">
+					<table cellpadding="0" cellspacing="0" id="conTab">
+						<caption>自来水公司检测总览</caption>
+						<thead>
+						<tr><th></td><td>浊度</td><td>PH值</td><td>余氯</td><td>电导率</td><td>溶解氧</td><td>水温</td></tr> 
+						</thead>
+					
+					<tr>
+					<td>总监测值</td>
+						<td>dsafdfas</td>
+						<td>dsafdfas</td>
+						<td>dsafdfas</td>
+						<td>dsafdfas</td>
+						<td>dsafdfas</td>
+						<td>dsafdfasd</td>
+					</tr>
+					<tr>
+					<td>上海自来水公司</td>
+						<td>dsafdfa</td>
+						<td>dsafdfasdfaf</td>
+						<td>dsafdfasdfaf</td>
+						<td>dsafdfasdfaf</td>
+						<td>dsafdfasdfaf</td>
+						<td>dsafdfasdfaf</td>
+					</tr>
+					<tr>
+					<td>上海自来水公司</td>
+						<td>dsafdfasdfaf</td>
+						<td>dsafdfasdfaf</td>
+						<td>dsafdfasdfaf</td>
+						<td>dsafdfasdfaf</td>
+						<td>dsafdfasdfaf</td>
+						<td>dsafdfasdfaf</td>
+					</tr>
+					<tr>
+					<td>上海自来水公司</td>
+						<td>dsafdfasdfaf</td>
+						<td>dsafdfasdfaf</td>
+						<td>dsafdfasdfaf</td>
+						<td>dsafdfasdfaf</td>
+						<td>dsafdfasdfaf</td>
+						<td>dsafdfasdfaf</td>
+					</tr>
+					<tr>
+					<td>上海自来水公司</td>
+						<td>dsafdfasdfaf</td>
+						<td>dsafdfasdfaf</td>
+						<td>dsafdfasdfaf</td>
+						<td>dsafdfasdfaf</td>
+						<td>dsafdfasdfaf</td>
+						<td>dsafdfasdfaf</td>
+					</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+		<div class="w_conComm">
+					<input type="button" name="company" id="company" value="自来水公司分布图"/>
+					<input type="button" name="region" id="region" value="上海行政区分布图"/>
+		</div>
+	</div>
+
+<script type="text/javascript"> 
+
+
+
+
+ 
+
+var map = new BMap.Map("map");
+
+
+var point = new BMap.Point(121.487899,31.249162);  // 创建点坐标
+map.centerAndZoom(point, 10);
+// map.addControl(new BMap.NavigationControl({type: BMAP_NAVIGATION_CONTROL_SMALL}));
+ map.addControl(new BMap.MapTypeControl({mapTypes:[BMAP_NORMAL_MAP, BMAP_SATELLITE_MAP, BMAP_HYBRID_MAP]}));
+map.addControl(new BMap.NavigationControl());
+map.enableScrollWheelZoom();
+map.enableContinuousZoom();
+
+
+
+
+var marker1 = new BMap.Marker(new BMap.Point(121.446235, 31.169152));  // 创建标注
+map.addOverlay(marker1); 
+
+// getBoundary("黄浦区-#C8C1E3");
+
+
+
+
+
+var provinces = ["黄浦区-#C8C1E3", "徐汇区-#FBC5DC", "松江区-#DBEDC7", "奉贤区-#E7CCAF", "嘉定区-#DBEDC7",
+                 "宝山区-#FEFCBF", "宝山区-#E7CCAF", "虹口区-#C8C1E3", "闵行区-#FBC5DC", "崇明县-#C8C1E3",
+                 "闸北区-#DBECC8", "杨浦区-#DBECC8", "浦东新区-#FCFBBB", "普陀区-#FCFBBB", "长宁区-#FCFBBB", "青浦区-#FCFBBB",
+                 "静安区-#FCFBBB", "金山区-#E7CCAF"
+             ];
+
+
+  
+	
+	function getBoundary(province) {
+		  var name=province.split("-");
+	    var boundary = new BMap.Boundary();
+	  
+	    boundary.get(name[0], function(rs){ 
+	     //一个省可能有好几个闭合的多边形区域
+	      
+	     for (var i = 0; i < rs.boundaries.length; i++) {
+	    	 var   ply = new BMap.Polygon(rs.boundaries[i], {strokeColor:"blue", strokeWeight:2, strokeOpacity:0.5,strokeBackground:"#C8C1E3"}); //建立多边形覆盖物
+	            map.addOverlay(ply);  //添加覆盖物
+	           haidianCenter = new BMap.Point(121.446235,31.169152);
+	           haidianLabel2 = new BMap.Label(name[0],{offset: new BMap.Size(0,0), position: ply});  
+	            haidianLabel2.setStyle({"line-height": "20px", "text-align": "center", "width": "80px", "height": "29px", "border": "none", "padding": "2px","background-color": ""+name[1]+"",});  
+	            map.addOverlay(haidianLabel2);  
+	        }                
+	     });    
+	   
+	} 
+
+	
+	/*显示区域*/
+	for (var i = provinces.length-1; i >= 0; i--) {
+	    getBoundary(provinces[i]);
+	}
+	var polygon=new BMap.
+	
+	polygon.addEventListener("click", function (e) {
+    var latlng = e.point;
+    var info = new BMap.InfoWindow(name + " " + latlng.lat + "," + latlng.lng, {width:220});
+    map.openInfoWindow(info, latlng);
+
+    //高亮闪烁显示鼠标点击的省
+    delay = 0;
+    for (flashTimes = 0; flashTimes < 3; flashTimes++) {
+        delay += 200;
+        setTimeout(function () {
+            polygon.setFillColor("#FFFF00");
+        }, delay);
+
+        delay += 200;
+        setTimeout(function () {
+            polygon.setFillColor(color);
+        }, delay);
+    }
+});
+	
+
+	/*自来水公司和行政区切换操作*/
+	
+	$("#")
+	
+	
+	
+
+
+
+
+</script> 
+
+
+
+</body>
+</html>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zaojiao.sys.mappers.area.AreaMapper">
+	<resultMap type="com.zaojiao.sys.pojo.City" id="areaMapper">
+		<id property="_id" column="_id"/>
+		<result property="typeName" column="city_name"/>
+	</resultMap>
+	
+	<resultMap type="com.zaojiao.sys.pojo.Area" id="subAreaMapper">
+		<id property="_id" column="_id"/>
+		<result property="areaName" column="area_name"/>
+		<collection property="subArea" ofType="com.zaojiao.sys.pojo.SubArea">
+        	<id property="_id" column="subarea_id"/>
+        	<result property="typeName" column="subarea_name"/>
+		</collection>
+	</resultMap>
+	
+	<select id="listArea" resultMap="areaMapper">
+		SELECT a._id,a.city_name
+		FROM t_city a
+		WHERE a.level_id = 2
+		AND a.parent_id = #{cityId}
+	</select>
+	<select id="listSubArea">
+		SELECT a._id,a.city_name area_name,b._id subarea_id,b.area_name subarea_name
+		FROM t_city a
+		LEFT JOIN t_sub_area b
+		ON a._id = b.city_id
+		WHERE a.level_id = 2
+		AND a.parent_id = #{cityId}
+	</select>
+</mapper>

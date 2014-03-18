@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zaojiao.sys.mappers.personalInfo.PersonalInfoMapper">
+    <resultMap type="com.zaojiao.sys.pojo.BookLog" id="bookLogMap">	
+        <result property="_id" column="_id"/>
+        <result property="insName" column="ins_name"/>
+        <result property="bookTime" column="book_time"/>
+        <result property="insJudge" column="ins_judge"/>
+    </resultMap>
+    
+    <resultMap type="com.zaojiao.sys.pojo.LoginPersonal" id="loginPerMap">	
+        <result property="loginId" column="login_id"/>
+        <result property="oldPwd" column="pwd"/>
+        <result property="babyName" column="baby_name"/>
+        <result property="parentName" column="parent_name"/>
+        <result property="birthday" column="baby_birthday"/>
+        <result property="babySex" column="baby_sex"/>
+        <result property="phone" column="phone"/>
+    </resultMap>
+    
+  
+  
+    <!--查询预约-->
+   <select id="listbookLog" resultMap="bookLogMap">
+   		SELECT b._id,i.ins_name,b.book_time,b.ins_judge  FROM t_book_log b   LEFT JOIN  t_institution i ON i.ins_id=b.ins_id  WHERE b.user_id=#{userId} and b.ins_judge=0
+   </select>
+   
+    <!--取消预约-->
+   <update id="updateBookLog">
+		UPDATE  t_book_log b  SET b.ins_judge=1 WHERE b._id=#{id}
+   </update>
+   
+    <!--修改个人信息(有密码的情况)-->
+    <select id="updateLogPers"  parameterType="com.zaojiao.sys.pojo.LoginPersonal" resultType="java.lang.String">
+		<![CDATA[ {
+		 	call update_personal_info(
+		 		#{lodpwd},
+		 		#{newpwd},
+		 		#{loginId},
+				#{birthday},
+		 		#{babyName},
+		 		#{babySex},
+		 		#{parentName},
+		 		#{phone}
+		 	)
+		 }]]>
+   </select>
+   <update id="updatePer">
+   		UPDATE t_login t SET t.baby_birthday='#{birthday}',t.baby_name='#{babyName}',t.baby_sex='#{babySex}',t.parent_name='#{parentName}',t.phone='#{phone}' WHERE t.login_id='#{loginId}'
+   </update>
+   <!--查询个人信息-->
+   <select id="selectLogin" resultMap="loginPerMap">
+   		SELECT t.pwd,t.baby_name,t.baby_sex,t.baby_birthday,t.parent_name,t.phone FROM t_login t WHERE t.login_id='${userId}'
+   </select>
+</mapper>

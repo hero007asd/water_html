@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="GBK"?> 
+<!DOCTYPE urlrewrite PUBLIC "-//tuckey.org//DTD UrlRewrite 3.2//EN"  
+    "http://tuckey.org/res/dtds/urlrewrite3.2.dtd"> 
+<urlrewrite> 
+    <rule> 
+        <!-- 所有配置如下正则表达式的请求 --> 
+        <from>/city-(\w*)</from> 
+        <!-- 将被forward到如下JSP页面，其中$1代表  
+            上面第一个正则表达式所匹配的字符串 --> 
+        <to type="forward">/jsp/main.jsp?city=$1</to> 
+    </rule>  
+    <!-- js文件定向至指定目录 -->  
+	<!-- <rewrite url="^~/JS/([^\.]+).js$" to="~/JS/$1.js"  processing="stop"/>   -->
+	  
+	<!-- css文件定向至指定目录 -->  
+	<!-- <rewrite url="^~/Style/([^\.]+).css$" to="~/Style/$1.css"  processing="stop"/>  --> 
+	  
+	<!-- 将各个图像文件定向至指定目录，注意要给每个文件类型写一个规则 -->  
+	<!-- <rewrite url="^~/Image/([^\.]+).gif$" to="~/Image/$1.gif"  processing="stop"/>  
+	<rewrite url="^~/Image/([^\.]+).jpg$" to="~/Image/$1.jpg"  processing="stop"/>  
+	<rewrite url="^~/Image/([^\.]+).ico$" to="~/Image/$1.ico"  processing="stop"/> --> 
+</urlrewrite>

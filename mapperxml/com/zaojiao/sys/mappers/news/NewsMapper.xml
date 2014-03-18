@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zaojiao.sys.mappers.news.NewsMapper">
+    <resultMap type="com.zaojiao.sys.pojo.News" id="newsMap">	
+        <result property="id" column="id"/>
+        <result property="newsId" column="news_id"/>
+        <result property="newsTitle" column="news_title"/>
+        <result property="newsContent" column="news_conent"/>
+        <result property="newsTime" column="news_time"/>
+        <result property="newsSource" column="news_source"/>
+        <result property="newsTypeId" column="news_typeid"/>
+        <result property="count" column="count"/>
+    </resultMap>
+    
+   <select id="newsSelect" resultMap="newsMap">
+<!--SELECT
+n.id,
+ n.news_id,
+ n.news_title,
+ n.news_conent,
+ DATE_FORMAT(n.news_time, '%Y-%m-%d') news_time,
+ n.news_source,
+ n.news_typeid,
+ c.count
+FROM
+	news_message n,
+	(
+		SELECT 
+			COUNT(*) count
+		FROM
+			news_message m
+		WHERE
+			m.city_id = #{cityId} 
+			 AND m.news_typeid = #{typeid}
+	) c
+WHERE
+	n.news_typeid = #{typeid}
+AND n.city_id =  #{cityId}  ORDER BY  n.news_time DESC
+
+LIMIT #{start},#{size}-->
+
+SELECT
+n.id,
+ n.news_id,
+ n.news_title,
+ n.news_conent,
+ DATE_FORMAT(n.news_time, '%Y-%m-%d') news_time,
+ n.news_source,
+ n.news_typeid,
+ c.count
+FROM
+	news_message n,
+	(
+		SELECT 
+			COUNT(*) count
+		FROM
+			news_message m
+		WHERE
+		 m.news_typeid = #{typeid}
+	) c
+WHERE
+	n.news_typeid = #{typeid}
+  ORDER BY  n.news_time DESC
+
+LIMIT #{start},#{size}
+
+   </select>
+   
+    <select id="newsMes" resultMap="newsMap">
+    	SELECT n.news_title,n.news_conent,	DATE_FORMAT(n.news_time,'%Y-%m-%d %h:%i') news_time,n.news_source,n.news_img FROM news_message n WHERE n.id=#{id}
+    </select> 
+    
+  <select id="newsChoice" resultMap="newsMap">
+  	SELECT n.id,n.news_id,n.news_title,n.news_conent,n.news_time,n.news_source,n.news_typeid FROM news_message n WHERE n.city_id =#{cityId}  ORDER BY n.news_time DESC LIMIT 5
+  	</select> 
+
+</mapper>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd  
+	    http://www.springframework.org/schema/aop 
+	    http://www.springframework.org/schema/aop/spring-aop-3.0.xsd  
+	    http://www.springframework.org/schema/tx 
+	    http://www.springframework.org/schema/tx/spring-tx-3.0.xsd  
+	    http://www.springframework.org/schema/context
+	    http://www.springframework.org/schema/context/spring-context-3.0.xsd
+	    http://www.springframework.org/schema/mvc
+	    http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd ">
+	
+	<!-- 默认的注解映射的支持 <mvc:annotation-driven /> 
+	会自动注册DefaultAnnotationHandlerMapping与AnnotationMethodHandlerAdapter 两个bean
+	,是spring MVC为@Controllers分发请求所必须的--> 
+	<!-- 完成请求和注解POJO的映射,3.0.5以上，mvc：annotation没有DefaultAnnotationHandlerMapping这个属性，
+    <mvc:annotation-driven /> -->
+	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter" >
+		<property name="cacheSeconds" value="0"/>
+		<property name="messageConverters">
+			<!-- <list>
+				<bean class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter"></bean>
+			</list> -->
+			<list>
+				<bean class="org.springframework.http.converter.StringHttpMessageConverter">
+					<property name="supportedMediaTypes">
+						<list>
+							<value>text/html;charset=UTF-8</value>
+						</list>
+					</property>
+				</bean>
+			</list>
+		</property>
+	</bean>
+    <bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping"/> 
+
+	<!-- 启用spring mvc 注解 ,有了context:component-scan，去掉此元素-->
+	<!-- <context:annotation-config /> -->	
+	<!-- 设置使用注解的类所在的jar包 ,使用逗号进行包名分割-->
+	<context:component-scan base-package="com.zaojiao.sys.web"></context:component-scan>
+
+	<!-- 对转向页面的路径解析。prefix：前缀， suffix：后缀 -->
+	<!-- xmlns:p="http://www.springframework.org/schema/p" -->
+	<!-- <bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+		p:prefix="/jsp/" p:suffix=".jsp" /> -->
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<!-- <property name="prefix" value="/jsp"/>
+		<property name="suffix" value=".jsp"/> --><!-- 可为空,方便实现自已的依据扩展名来选择视图解释类的逻辑 -->
+		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+	</bean>
+	
+	<!-- 拦截器 -->  
+    <!-- <mvc:interceptors>  
+        <bean class="com.core.mvc.MyInteceptor" />  
+    </mvc:interceptors>   -->     
+      
+    <!-- 对静态资源文件的访问  方案一 （二选一） 使用默认的Servlet来响应静态文件-->  
+    <!-- <mvc:default-servlet-handler/> -->
+      
+    <!-- 对静态资源文件的访问  方案二 （二选一）-->  
+   <!--  <mvc:resources mapping="/images/**" location="/images/" cache-period="31556926"/>  
+    <mvc:resources mapping="/js/**" location="/js/" cache-period="31556926"/>  
+    <mvc:resources mapping="/css/**" location="/css/" cache-period="31556926"/>   -->
+</beans>

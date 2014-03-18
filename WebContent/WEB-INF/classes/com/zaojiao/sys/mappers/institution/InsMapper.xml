@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zaojiao.sys.mappers.institution.InsMapper">
+    <resultMap type="com.zaojiao.sys.pojo.Institution" id="insListMap">
+    	<id property="_id" column="_id"/>
+        <result property="totalCount" column="count"/>
+        <result property="insId" column="ins_id"/>
+        <result property="insName" column="ins_name"/>
+        <result property="address" column="address"/>
+        <result property="urlPath" column="page_url"/>
+        <result property="logoPath" column="logo_path"/>
+        <result property="insContent" column="ins_content"/>
+    </resultMap>
+    <resultMap type="com.zaojiao.sys.pojo.Institution" id="insCriteriaListMap">
+    	<id property="_id" column="_id"/>
+        <result property="totalCount" column="count"/>
+        <result property="insId" column="ins_id"/>
+        <result property="insName" column="ins_name"/>
+        <result property="urlPath" column="page_url"/>
+        <result property="logoPath" column="logo_path"/>
+        <result property="insContent" column="ins_content"/>
+        <association property="city" javaType="com.zaojiao.sys.pojo.City">
+        	<id property="_id" column="city_type_id"/>
+        	<result property="typeName" column="city_name"/>
+        </association>
+        <association property="area" javaType="com.zaojiao.sys.pojo.City">
+        	<id property="_id" column="area_type_id"/>
+        	<result property="typeName" column="area_name"/>
+        </association>
+        <association property="subArea" javaType="com.zaojiao.sys.pojo.SubArea">
+        	<id property="_id" column="sub_area_type_id"/>
+        	<result property="typeName" column="sub_area_name"/>
+        </association>
+        <association property="ageType" javaType="com.zaojiao.sys.pojo.Age">
+        	<id property="_id" column="age_type_id"/>
+        	<result property="typeName" column="age_type_name"/>
+        </association>
+        <collection property="insType" ofType="com.zaojiao.sys.pojo.InsType">
+        	<id property="_id" column="ins_type_id"/>
+        	<result property="typeName" column="ins_type_name"/>
+        </collection>
+    </resultMap>
+    
+    <resultMap type="com.zaojiao.sys.pojo.Institution" id="insDetailMap">
+    	<id property="_id" column="_id"/>
+        <result property="insId" column="ins_id"/>	
+        <result property="insName" column="ins_name"/>
+        <result property="address" column="address"/>
+        <result property="addressFlag" column="address_flag"/>
+        <result property="telNo" column="tel"/>
+        <result property="webSite" column="website"/>
+        <result property="trafficInfo" column="traffic"/>
+        <result property="logoPath" column="logo_path"/>
+        <result property="bannerPath" column="banner_path"/>
+        <result property="insContent" column="ins_content"/>
+        <association property="city" javaType="com.zaojiao.sys.pojo.City">
+        	<id property="_id" column="city_id"/>
+        	<result property="typeName" column="city_name"/>
+        </association>
+        <association property="area" javaType="com.zaojiao.sys.pojo.City">
+        	<id property="_id" column="area_id"/>
+        	<result property="typeName" column="area_name"/>
+        </association>
+        <association property="subArea" javaType="com.zaojiao.sys.pojo.SubArea">
+        	<id property="_id" column="sub_area_id"/>
+        	<result property="typeName" column="sub_area_name"/>
+        </association>
+        <!-- <collection property="insType" ofType="com.zaojiao.sys.pojo.InsType">
+        	<id property="_id" column="ins_type_id"/>
+        	<result property="typeName" column="type_name"/>
+        </collection> -->
+        <collection property="insType" resultMap="insTypeResMap"></collection>
+    </resultMap>
+    <resultMap type="com.zaojiao.sys.pojo.InsType" id="insTypeResMap">
+        	<id property="_id" column="ins_type_id"/>
+        	<result property="typeName" column="type_name"/>
+    </resultMap>
+
+	<select id="insertLog" parameterType="com.zaojiao.sys.pojo.BookLog" resultType="java.lang.String">
+		<![CDATA[
+			{call insert_log(
+				#{jigouId}
+				,#{loginId}
+				,#{bookTime}
+				,#{timeType}
+				,#{birthday}
+				,#{cityId}
+				,#{areaId}
+				,#{roadId}
+				,#{parentName}
+				,#{babyName}
+				,#{telNo}
+				,#{remark}
+				,#{insJudge}
+			)}
+		]]>
+	</select>
+   
+   <select id="listInstitution" resultMap="insListMap">
+   		SELECT c.count,a._id,a.ins_id,a.ins_name,a.page_url,LEFT(a.ins_content,100) as ins_content,a.address,a.logo_path
+		FROM t_institution a,(SELECT count(b._id) as count FROM t_institution b WHERE b.city_id =  #{cityId}) c
+		WHERE a.city_id = #{cityId}
+		LIMIT #{beginNo},#{pageSize}
+   </select>
+   
+   <select id="listInsWithWd" resultMap="insListMap">
+   		SELECT c.count,a._id,a.ins_id,a.ins_name,a.page_url,LEFT(a.ins_content,100) as ins_content,a.address,a.logo_path
+		FROM t_institution a,(SELECT count(b._id) as count FROM t_institution b WHERE b.ins_name LIKE CONCAT('%',#{wd},'%') AND b.city_id =  #{cityId}) c
+		WHERE a.ins_name LIKE CONCAT('%',#{wd},'%')
+		AND a.city_id =  #{cityId}
+		LIMIT #{beginNo},#{pageSize}
+   </select>
+   
+<!--    <select id="listInsWithCriteria" resultMap="insCriteriaListMap">
+   		SELECT c.count,a._id,a.ins_id,a.ins_name,a.page_url,LEFT(a.ins_content,100) as ins_content,a.logo_path
+		FROM t_institution a,
+			(SELECT count(b._id) as count FROM t_institution b 
+			WHERE b.city_id =  #{cityId}
+			<if test="areaId != null and areaId != 0">
+				and b.area_id = #{areaId}
+			</if>
+			<if test="subAreaId != null and subAreaId != 0">
+				and b.sub_area_id = #{subAreaId}
+			</if>
+			<if test="insType != null and insType != 0">
+				and b.ins_type like '%${insType}%'
+			</if>
+			<if test="ageType != null and ageType != 0">
+				and b.age_type like '%${ageType}%'
+			</if>
+			) c
+		where a.city_id = #{cityId}
+		<if test="areaId != null and areaId != 0">
+			and a.area_id = #{areaId}
+		</if>
+		<if test="subAreaId != null and subAreaId != 0">
+			and a.sub_area_id = #{subAreaId}
+		</if>
+		<if test="insType != null and insType != 0">
+			and a.ins_type like '%${insType}%'
+		</if>
+		<if test="ageType != null and ageType != 0">
+			and a.age_type like '%${ageType}%'
+		</if>
+		LIMIT #{beginNo},#{pageSize}
+   </select>
+    -->
+     <select id="listInsWithCriteria" resultMap="insCriteriaListMap">
+   		SELECT c.count,a._id,a.ins_id,a.ins_name,a.page_url,LEFT(a.ins_content,100) as ins_content,a.logo_path
+   				<if test="ageType != null and ageType != 0">,e._id age_type_id,e.type_name age_type_name</if>
+   				<if test="insType != null and insType != 0">,f._id ins_type_id,f.type_name ins_type_name</if>
+   				<if test="cityId != null and cityId != 0">,g._id city_type_id,g.city_name</if>
+   				<if test="areaId != null and areaId != 0">,h._id area_type_id,h.city_name area_name</if>
+   				<if test="subAreaId != null and subAreaId != 0">,i._id sub_area_type_id,i.area_name sub_area_name</if>
+		FROM t_institution a
+		<if test="ageType != null and ageType != 0">
+	    	LEFT JOIN t_type_age e
+			ON e._id = #{ageType}
+	    </if>
+		<if test="insType != null and insType != 0">
+			LEFT JOIN t_type_ins f
+			ON f._id = #{insType}
+		</if>
+		<if test="cityId != null and cityId != 0">
+			LEFT JOIN t_city g
+			ON g._id = #{cityId}
+		</if>
+		<if test="areaId != null and areaId != 0">
+			LEFT JOIN t_city h
+			ON h._id = #{areaId}
+		</if>
+		<if test="subAreaId != null and subAreaId != 0">
+			LEFT JOIN t_sub_area i
+			ON i._id = #{subAreaId}
+		</if>
+			,(SELECT count(b._id) as count FROM t_institution b 
+			WHERE b.city_id =  #{cityId}
+			<if test="areaId != null and areaId != 0">
+				and b.area_id = #{areaId}
+			</if>
+			<if test="subAreaId != null and subAreaId != 0">
+				and b.sub_area_id = #{subAreaId}
+			</if>
+			<if test="insType != null and insType != 0">
+				and b.ins_type like '%${insType}%'
+			</if>
+			<if test="ageType != null and ageType != 0">
+				and b.age_type like '%${ageType}%'
+			</if>
+			) c
+		where a.city_id = #{cityId}
+		<if test="areaId != null and areaId != 0">
+			and a.area_id = #{areaId}
+		</if>
+		<if test="subAreaId != null and subAreaId != 0">
+			and a.sub_area_id = #{subAreaId}
+		</if>
+		<if test="insType != null and insType != 0">
+			and a.ins_type like '%${insType}%'
+		</if>
+		<if test="ageType != null and ageType != 0">
+			and a.age_type like '%${ageType}%'
+		</if>
+		LIMIT #{beginNo},#{pageSize}
+   </select>
+   
+   <select id="showDetail" resultMap="insDetailMap">
+   		SELECT a._id,a.ins_id,a.ins_name,a.banner_path,a.logo_path,a.address,a.address_flag,a.tel,a.website,a.traffic,a.ins_content,a.city_id,a.area_id,a.sub_area_id
+   		,a.city_name,a.area_name,a.sub_area_name,b._id as ins_type_id,b.type_name
+		FROM t_institution a
+		LEFT JOIN t_type_ins b
+		ON a.ins_type LIKE CONCAT('%',b._id,'%')
+		WHERE a.ins_id = #{insId}
+   </select>
+</mapper>

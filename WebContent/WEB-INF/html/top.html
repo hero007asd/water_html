@@ -1,0 +1,100 @@
+	<div id="logo">
+		<div class="fl">
+			<div>
+				<a href=""> <img alt="我要早教"
+					src="http://jr.nhis.or.kr/static/images/main/img_logo.gif"> </a>
+			</div>
+			<div>
+				<span class="f14b pink">上海</span> <a href="javascript:;">[切换区域]</a>
+			</div>
+		</div>
+		<div class="fl">
+			<div id="h_user" class="right">
+				<!-- <a href="">
+			<img alt="首页" src="http://jr.nhis.or.kr/static/images/main/img_toplink1.gif">
+		</a>
+		<a href="">
+			<img alt="注册" src="http://jr.nhis.or.kr/static/images/main/img_toplink2.gif">
+		</a>
+		<a href="">
+			<img alt="登录" src="http://jr.nhis.or.kr/static/images/main/img_toplink2.gif">
+		</a> -->
+				<img width="1" vspace="3" height="32" align="middle"
+					style="vertical-align: middle;"
+					src="http://www.izaojiao.com/blank.gif" /> <a rel="nofollow"
+					onclick="javascript:show_log();return false;"
+					href="http://www.izaojiao.com/login.php">登录</a> | <a rel="nofollow"
+					href="http://www.izaojiao.com/register.php?city=shanghai">免费注册</a>
+				<!--  |
+                <a class="qq" rel="nofollow" title="直接使用QQ帐号登录" href="http://www.izaojiao.com/api/qq_login.php?city=shanghai">QQ登录</a>
+                |
+                <a class="sina" rel="nofollow" title="直接使用新浪微博帐号登录" href="http://www.izaojiao.com/api/sina_login.php?city=shanghai">新浪微博登录</a> -->
+				<!--|加关注-->
+			</div>
+		</div>
+	</div>
+	<div id="top_bg">
+		<div id="top_area">
+			<ul id="gnb">
+				<li class="now"><a href="index.html"> 首页 </a></li>
+				<li><a href="jigou.html">早教机构 </a></li>
+				<li><a href="">早教动态 </a></li>
+				<li><a href="">早教商城 </a></li>
+			</ul>
+			<div>
+				<a href="#"> <img class="search_btn fr" alt="早教机构"
+					src="images/main/search.jpg"> </a> <input name="s_key"
+					class="search_text fr" type="text" value="请输入机构名称"
+					onblur="if(this.value==''){this.value='请输入机构名称';this.style.color='#CCC';}"
+					onclick="if(this.value=='请输入机构名称'){this.value='';this.style.color='#666';}" />
+			</div>
+		</div>
+	</div>
+	
+	<div class="pop_win_bg"
+		style="height: 284px; width: 332px; left: 786px; top: 140px; z-index: 8888;display: none;"></div>
+	<div class="pop_win" style="display: none;; left: 795.5px; top: 150.3px; visibility: visible; z-index: 9999;">
+		<a class="pop_win_close" href="" onclick="javascript:close();">X</a>
+
+		<h3>
+		登录爱早教 <span> ( <a
+			href="http://www.izaojiao.com/register.php?city=shanghai">还没有注册?</a>
+			) </span>
+		</h3>
+		<form id="pop_win_login" action="" method="post" name="lzform">
+			<fieldset>
+				<input type="hidden" value="simple" name="source">
+				<div class="item">
+					<label for="form_email">帐号</label> <input class="text pop_email"
+						type="text" title="邮箱/手机号码" value="" name="form_email" id="email">
+				</div>
+				<div class="item">
+					<label for="form_password">密码</label> <input id="pop_password"
+						class="text" type="password" name="form_password">
+				</div>
+<!-- 				<div class="item hidden"> -->
+<!-- 					<label> </label> <input id="remember" type="checkbox" -->
+<!-- 						name="remember"> <label class="sub" for="remember">下次自动登录 -->
+<!-- 						|</label> <a style="margin-left: 0.8em;" tabindex="2" -->
+<!-- 						href="http://www.izaojiao.com/forget_password.php">忘记密码了</a> -->
+<!-- 				</div> -->
+				<div class="item recsubmit">
+					<label>&nbsp;&nbsp;&nbsp;&nbsp; </label>
+					<div>
+						<span class="bn-flat"> <input type="submit" value="登录">
+						</span> <a target="_blank" href="http://www.izaojiao.com/get_pass.php">忘记密码?</a>
+						<span id="pop_tips" class="red"></span>
+					</div>
+				</div>
+			</fieldset>
+			<div style="margin-left: 45px;">
+				<div style="margin: 10px 0;">您也可以用以下合作网站登录爱早教：</div>
+				<div>
+					<a class="qq"
+						href="http://www.izaojiao.com/api/qq_login.php?city=shanghai">QQ帐号</a>
+					| <a class="sina"
+						href="http://www.izaojiao.com/api/sina_login.php?city=shanghai">新浪微博</a>
+				</div>
+			</div>
+		</form>
+	</div>

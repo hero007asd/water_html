@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zaojiao.sys.mappers.institution.CourseMapper">
+    <resultMap type="com.zaojiao.sys.pojo.Course" id="insCourseMap">
+    	<id property="_id" column="_id"/>
+        <result property="age" column="age"/>
+        <result property="courseContent" column="course_summary"/>
+        <result property="courseName" column="course_name"/>
+        <result property="pageUrl" column="page_url"/>
+    </resultMap>
+    <resultMap type="com.zaojiao.sys.pojo.Course" id="courseMap">
+    	<id property="_id" column="_id"/>
+        <result property="courseContent" column="course_content"/>
+        <result property="courseName" column="course_name"/>
+        <result property="insId" column="ins_id"/>
+        <result property="insName" column="ins_name"/>
+        <result property="pageUrl" column="page_url"/>
+        <result property="cityId" column="city_id"/>
+    </resultMap>
+    <resultMap type="com.zaojiao.sys.pojo.Course" id="othersCourseMap">
+    	<id property="_id" column="_id"/>
+        <result property="courseName" column="course_name"/>
+        <result property="pageUrl" column="page_url"/>
+    </resultMap>
+    
+    <!--update by tommy 20131024 修正课程简介字段  -->
+   <select id="listCourse" resultMap="insCourseMap">
+   		SELECT a._id,a.course_name,a.page_url,a.course_summary,a.age
+		FROM t_course a
+		where a.ins_id = #{insId}
+   </select>
+   
+   <select id="showDetail" resultMap="courseMap">
+		SELECT a._id,a.course_name,a.course_content,a.ins_id,b.ins_name,b.page_url,b.city_id
+		FROM t_course a
+		LEFT JOIN t_institution b
+		ON a.ins_id = b.ins_id
+		WHERE a._id = #{courseId}
+   </select>
+   
+   <select id="getOthers" resultMap="othersCourseMap">
+   		SELECT b._id,b.course_name,b.page_url
+		FROM t_course b
+		WHERE b.ins_id =(SELECT a.ins_id
+		FROM t_course a
+		where a._id = #{courseId})
+   </select>
+</mapper>
