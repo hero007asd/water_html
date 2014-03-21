@@ -1,5 +1,19 @@
+//返回按钮状态
 var st;
+//趋势图放大或缩小状态
 var star;
+//趋势图状态(是总公司还是公公司的趋势图)
+var tu;
+
+
+
+//趋势图值
+var res1;
+var res2;
+var res3;
+var res4;
+var res5;
+var res6;
 
 jQuery(document).ready(function(){
 	
@@ -88,7 +102,7 @@ jQuery(document).ready(function(){
 		if(ids==1){
 			allrep();
 		}else if(ids==2){
-			content(1);
+			corpTu(1);
 		}
 	}
 
@@ -103,17 +117,18 @@ jQuery(document).ready(function(){
 $(".backs").live('click',function(){
 	if(st==1||st==3||st==5){
 		//1是总公司，返回总页,3是趋势图，返回 总页，5是某个检测点信息，返回 总页
-		location.href="index.html";
+		location.href="aa.html";
 	}else if(st==2){
 		//是子公司 返回总公司
 		allrep();
-	}else if(st==4){
-		//进入某个趋势图之一   返回总览图
-		content(1);
 	}
+//	else if(st==4){
+//		//进入某个趋势图之一   返回总览图
+//		trend(0);
+//	}
 });
 	
-//点击
+//点击下拉框
 $(".r_con div").live('click',function(){
 	st=4;
 	star=1;
@@ -124,17 +139,7 @@ $(".r_con div").live('click',function(){
 	
 	//方法
 	selectid(id);
-	
-	
 });	
-//拆线图下拉框触发事件
-//$(".mapsele").change(function(){
-//	alert("ddd");
-//	
-//		var id=$("#mapsele").val();
-//		selectid(id);
-//});
-
 });
 
 //下拉框触发事件方法
@@ -177,35 +182,35 @@ function selectid(id){
 
 
 /*查看趋势图(日，周，月)*/
-function content(type){
-	star=0;
-	st=3;
-	
-	$(".r_con").empty();
-	$(".r_top").empty();
-	
-	$(".r_top").append("<input type='button' name='back' class='backs' value='返回' onclick=''/><input type='button' name='day' id='day' value='本日 ' onclick='content(1)'/>"
-			+"<input type='button' name='week' id='week' value='本周' onclick='content(2)'/><input type='button' name='month' id='month' value='本月' onclick='content(3)'/><input type='button' name='reportBiao' id='reportBiao' value='报表' onclick='allrep()'/>");
-	
-	$(".r_con").append("<div class='r_divcon' id='divmap1' style='width:550px;height: 400px;margin-left:20px;float: left;'></div>"
-	+"<div class='r_divcon' id='divmap2' style='width:550px;height: 400px;margin-left:10px;float: left;'></div>"
-	+"<div class='r_divcon' id='divmap3' style='width:550px;height: 400px;margin-left:10px;float: left;'></div>"
-	+"<div class='r_divcon' id='divmap4' style='width:550px;height: 400px;margin-left:10px;float: left;'></div>"
-	+"<div class='r_divcon' id='divmap5' style='width:550px;height: 400px;margin-left:10px;float: left;'></div>"
-	+"<div class='r_divcon' id='divmap6' style='width:550px;height: 400px;margin-left:10px;float: left;'></div>");
-	
-	//PH值
-	divmap1();
-	//电导率
-	divmap2();
-	//溶解氧
-	divmap3();
-	//余氯
-	divmap4();
-	//浊度
-	divmap5();
-	//温度
-	divmap6();
+//function content(type){
+//	star=0;
+//	st=3;
+//	
+//	$(".r_con").empty();
+//	$(".r_top").empty();
+//	
+//	$(".r_top").append("<input type='button' name='back' class='backs' value='返回' onclick=''/><input type='button' name='day' id='day' value='本日 ' onclick='content(1)'/>"
+//			+"<input type='button' name='week' id='week' value='本周' onclick='content(2)'/><input type='button' name='month' id='month' value='本月' onclick='content(3)'/><input type='button' name='reportBiao' id='reportBiao' value='报表' onclick='allrep()'/>");
+//	
+//	$(".r_con").append("<div class='r_divcon' id='divmap1' style='width:550px;height: 400px;margin-left:20px;float: left;'></div>"
+//	+"<div class='r_divcon' id='divmap2' style='width:550px;height: 400px;margin-left:10px;float: left;'></div>"
+//	+"<div class='r_divcon' id='divmap3' style='width:550px;height: 400px;margin-left:10px;float: left;'></div>"
+//	+"<div class='r_divcon' id='divmap4' style='width:550px;height: 400px;margin-left:10px;float: left;'></div>"
+//	+"<div class='r_divcon' id='divmap5' style='width:550px;height: 400px;margin-left:10px;float: left;'></div>"
+//	+"<div class='r_divcon' id='divmap6' style='width:550px;height: 400px;margin-left:10px;float: left;'></div>");
+//	
+//	//PH值
+//	divmap1();
+//	//电导率
+//	divmap2();
+//	//溶解氧
+//	divmap3();
+//	//余氯
+//	divmap4();
+//	//浊度
+//	divmap5();
+//	//温度
+//	divmap6();
 
 	
 //type=1，2，3代表日，周，月
@@ -219,22 +224,27 @@ function content(type){
 //			
 //		}
 //	});
-};
+
+
+//};
 
 /*页面初始化(显示所有某个城市所有公司的信息)*/
 function allrep(){
 	st=1;
+	tu=1;
 	$(".r_top").empty();
 	$(".r_con").empty();
 	
-	$(".r_top").append("<input type='button' name='back'  class='backs' value='返回'/><input type='button' name='report' id='repotr' value='趋势图' onclick='content(1);'/>");
+	$(".r_top").append("<input type='button' name='back'  class='backs' value='返回'/><input type='button' name='report' id='repotr' value='趋势图' onclick='corpTu(1)'/>");
 	$(".r_con").append("<table border='1' cellpadding='0' cellspacing='0' id='r_re'></table>");
 // 	$("#r_re").empty();
 	
 	//ajax请求
 	
+	
+	
 	$.ajax({
-		url:"http://www.wetouching.com:8000/hardsocket/getAllCorpReports/?city_id=310000",
+		url:"http://www.wetouching.com:8000/hardsocket/getAllCorpReports?city_id=310000",
 		type:"GET",
 		dataType:"jsonp",
 		jsonp:"jsonpcallback",
@@ -258,8 +268,6 @@ function allrep(){
 	
 	
 	
-	
-	
 //	$("#r_re").append("<tr style='background-color:#f5faad'><th></th><th colspan='6' class='ri'>当日总体水质</th><th colspan='6'  class='ri'>本周总体水质</th><th colspan='6'  class='ri'>本月总体水质</th></tr>"
 //			+"<tr><td></td><td  class='ri'>PH</td><td>电导</td><td>溶氧</td><td>余氯</td><td>浊度</td><td>温度</td><td  class='ri'>PH</td><td>电导</td><td>溶氧</td><td>余氯</td><td>浊度</td><td>温度</td><td  class='ri'>PH</td><td>电导</td><td>溶氧</td><td>余氯</td><td>浊度</td><td>温度</td></tr>"
 //			+"<tr><td>全市</td><td  class='ri'>20</td><td>12</td><td>11</td><td>100</td><td>6.9</td><td>25</td><td  class='ri'>20</td><td>12</td><td>11</td><td>100</td><td>6.9</td><td>25</td><td  class='ri'>20</td><td>12</td><td>11</td><td>100</td><td>6.9</td><td>25</td></tr>"
@@ -277,7 +285,11 @@ function allrep(){
 /*单击某个公司显示子公司的信息*/
 function getreps(id){
 	st=2;
-	$("#r_re").empty();
+	tu=2;
+	$(".r_top").empty();
+	$(".r_con").empty();
+	$(".r_top").append("<input type='button' name='back'  class='backs' value='返回'/><input type='button' name='report' id='repotr' value='趋势图' onclick='chirdCorpTu("+id+",1)'/>");
+	$(".r_con").append("<table border='1' cellpadding='0' cellspacing='0' id='r_re'></table>");
 	//ajax请求
 	
 	$.ajax({
@@ -305,6 +317,7 @@ function getreps(id){
 	
 	
 	
+	
 //	$("#r_re").append("<tr style='background-color:#f5faad'><th></th><th colspan='6' class='ri'>当日总体水质</th><th colspan='6'  class='ri'>本周总体水质</th><th colspan='6'  class='ri'>本月总体水质</th></tr>"
 //			+"<tr><td></td><td  class='ri'>PH</td><td>电导</td><td>溶氧</td><td>余氯</td><td>浊度</td><td>温度</td><td  class='ri'>PH</td><td>电导</td><td>溶氧</td><td>余氯</td><td>浊度</td><td>温度</td><td  class='ri'>PH</td><td>电导</td><td>溶氧</td><td>余氯</td><td>浊度</td><td>温度</td></tr>"
 //			+"<tr><td >全市</td><td  class='ri'>20</td><td>12</td><td>11</td><td>100</td><td>6.9</td><td>25</td><td  class='ri'>20</td><td>12</td><td>11</td><td>100</td><td>6.9</td><td>25</td><td  class='ri'>20</td><td>12</td><td>11</td><td>100</td><td>6.9</td><td>25</td></tr>"
@@ -319,6 +332,141 @@ function getreps(id){
 
 
 
+function corpTu(type){
+	
+	res1="";
+	res2="";
+	res3="";
+	res4="";
+	res5="";
+	res6="";
+	
+	//获取总公司日，周，月
+	$.ajax({
+		url:"http://www.wetouching.com:8000/hardsocket/getAllCorpReports?city_id=310000&reports_type="+type,
+		type:"GET",
+		dataType:"jsonp",
+		jsonp:"jsonpcallback",
+		success:function(data){
+		var	result=eval(data);
+			
+			for ( var x = 0; x < x.length; x++) {
+				
+//				var thre=result[x][2];
+				var threle=result[x][2].length;
+				for ( var y = 0; y < threle.length; y++) {
+					res1+=threle[y][0];
+					res2+=threle[y][1];
+					res3+=threle[y][2];
+					res4+=threle[y][3];
+					res5+=threle[y][4];
+					res6+=threle[y][5];
+				}
+			}
+		}
+	});
+	
+	
+	star=0;
+	st=3;
+	
+	$(".r_con").empty();
+	$(".r_top").empty();
+	
+	$(".r_top").append("<input type='button' name='back' class='backs' value='返回' onclick=''/><input type='button' name='day' id='day' value='本日 ' onclick='chirdCorpTu(1)'/>"
+			+"<input type='button' name='week' id='week' value='本周' onclick='chirdCorpTu(2)'/><input type='button' name='month' id='month' value='本月' onclick='chirdCorpTu(3)'/><input type='button' name='reportBiao' id='reportBiao' value='报表' onclick='allrep()'/>");
+	
+	$(".r_con").append("<div class='r_divcon' id='divmap1' style='width:550px;height: 400px;margin-left:20px;float: left;'></div>"
+	+"<div class='r_divcon' id='divmap2' style='width:550px;height: 400px;margin-left:10px;float: left;'></div>"
+	+"<div class='r_divcon' id='divmap3' style='width:550px;height: 400px;margin-left:10px;float: left;'></div>"
+	+"<div class='r_divcon' id='divmap4' style='width:550px;height: 400px;margin-left:10px;float: left;'></div>"
+	+"<div class='r_divcon' id='divmap5' style='width:550px;height: 400px;margin-left:10px;float: left;'></div>"
+	+"<div class='r_divcon' id='divmap6' style='width:550px;height: 400px;margin-left:10px;float: left;'></div>");
+	
+	//PH值
+	divmap1(res1);
+	//电导率
+	divmap2(res2);
+	//溶解氧
+	divmap3(res3);
+	//余氯
+	divmap4(res4);
+	//浊度
+	divmap5(res5);
+	//温度
+	divmap6(res6);
+	
+}
+
+function chirdCorpTu(cordId,type){
+	//获取分公司日，周，月
+	res1="";
+	res2="";
+	res3="";
+	res4="";
+	res5="";
+	res6="";
+	
+	
+	$.ajax({
+		url:"http://www.wetouching.com:8000/hardsocket/getSubCorpReports/?corp_id="+id+"&reports_type="+type,
+		type:"GET",
+		dataType:"jsonp",
+		jsonp:"jsonpcallback",
+		success:function(data){
+			result=eval(data);
+			
+
+			for ( var x = 0; x < result.length; x++) {
+				
+//				var thre=result[x][2];
+				var threle=result[x][2].length;
+				for ( var y = 0; y < threle.length; y++) {
+					res1+=threle[y][0];
+					res2+=threle[y][1];
+					res3+=threle[y][2];
+					res4+=threle[y][3];
+					res5+=threle[y][4];
+					res6+=threle[y][5];
+				}
+			}
+		
+		}
+	});
+	
+	
+	
+	star=0;
+	st=3;
+	
+	$(".r_con").empty();
+	$(".r_top").empty();
+	
+	$(".r_top").append("<input type='button' name='back' class='backs' value='返回' onclick=''/><input type='button' name='day' id='day' value='本日 ' onclick='chirdCorpTu("+cordId+",1)'/>"
+			+"<input type='button' name='week' id='week' value='本周' onclick='chirdCorpTu("+cordId+",2)'/><input type='button' name='month' id='month' value='本月' onclick='chirdCorpTu("+cordId+",3)'/><input type='button' name='reportBiao' id='reportBiao' value='报表' onclick='allrep()'/>");
+	
+	$(".r_con").append("<div class='r_divcon' id='divmap1' style='width:550px;height: 400px;margin-left:20px;float: left;'></div>"
+	+"<div class='r_divcon' id='divmap2' style='width:550px;height: 400px;margin-left:10px;float: left;'></div>"
+	+"<div class='r_divcon' id='divmap3' style='width:550px;height: 400px;margin-left:10px;float: left;'></div>"
+	+"<div class='r_divcon' id='divmap4' style='width:550px;height: 400px;margin-left:10px;float: left;'></div>"
+	+"<div class='r_divcon' id='divmap5' style='width:550px;height: 400px;margin-left:10px;float: left;'></div>"
+	+"<div class='r_divcon' id='divmap6' style='width:550px;height: 400px;margin-left:10px;float: left;'></div>");
+	
+	//PH值
+	divmap1(res1);
+	//电导率
+	divmap2();
+	//溶解氧
+	divmap3(res2);
+	//余氯
+	divmap4(res3);
+	//浊度
+	divmap5(res4);
+	//温度
+	divmap6(res5);
+	
+	
+}
 
 
 function divmap1(data){
@@ -328,7 +476,16 @@ function divmap1(data){
 	/*创建趋势图*/
 	var myChart = new JSChart('divmap1', 'line');
 	myChart.setTitle('PH值');
-	myChart.setDataArray([[1, 2],[2, 5],[3, 10],[4, 1],[5, 6],[6, 9],[7, 7],[8, 3],[9, 13],[10, 12],[11, 12],[12, 12],[13, 12]], 'blue');
+	
+	for ( var z = 0; z < data.length; z++) {
+		
+		
+		
+	}
+	
+	
+//	myChart.setDataArray([[1, 2],[2, 5],[3, 10],[4, 1],[5, 6],[6, 9],[7, 7],[8, 3],[9, 13],[10, 12],[11, 12],[12, 12],[13, 12]], 'blue');
+	myChart.setDataArray([[6, 9],[7,10]], 'blue');
 	myChart.setDataArray([[1, 2],[2, 5],[3, 7],[4, 10],[5, 11],[6, 2],[7, 3],[8, 13],[9, 10],[10, 9],[11, 12],[12, 12],[13, 12]], 'green');
 	myChart.setDataArray([[1, 1],[2, 2],[3, 10],[4, 8],[5, 2],[6, 6],[7, 0],[8, 5],[9, 9],[10, 2],[11, 12],[12, 12],[13, 12]], 'gray');
 	myChart.setAxisPaddingBottom(40);
@@ -398,20 +555,20 @@ function divmap1(data){
 	myChart.setBackgroundImage('../../site_media/img/chart_bg.jpg');
 	if(star==0){
 		myChart.setSize(500, 300);
-		myChart.setLegendShow(true);
-		myChart.setLegendPosition(400, 80);
-		myChart.setAxisPaddingRight(110);
-		myChart.setLegendForLine('blue', '市北公司');
-		myChart.setLegendForLine('green', '市南公司');
-		myChart.setLegendForLine('gray', '市东公司');
+//		myChart.setLegendShow(true);
+//		myChart.setLegendPosition(400, 80);
+//		myChart.setAxisPaddingRight(110);
+//		myChart.setLegendForLine('blue', '市北公司');
+//		myChart.setLegendForLine('green', '市南公司');
+//		myChart.setLegendForLine('gray', '市东公司');
 	}else if(star==1){
 		myChart.setSize(1300, 700);
-		myChart.setLegendShow(true);
-		myChart.setLegendPosition(1200, 300);
-		myChart.setAxisPaddingRight(150);
-		myChart.setLegendForLine('blue', '市北公司');
-		myChart.setLegendForLine('green', '市南公司');
-		myChart.setLegendForLine('gray', '市东公司');
+//		myChart.setLegendShow(true);
+//		myChart.setLegendPosition(1200, 300);
+//		myChart.setAxisPaddingRight(150);
+//		myChart.setLegendForLine('blue', '市北公司');
+//		myChart.setLegendForLine('green', '市南公司');
+//		myChart.setLegendForLine('gray', '市东公司');
 	}
 	
 	

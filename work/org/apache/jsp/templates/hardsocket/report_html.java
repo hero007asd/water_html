@@ -77,8 +77,6 @@ public final class report_html extends org.apache.jasper.runtime.HttpJspBase
       out.write(".r_con2{width: 100%;height: auto;margin-bottom: 20px;margin-top: 50px;}\r\n");
       out.write(".r_con2 input{float: left;margin-left: 100px;width: 150px;height: 50px;margin-bottom: 20px;font-size: 18px;}\r\n");
       out.write("</style>\r\n");
-      out.write("\r\n");
-      out.write("\r\n");
       out.write("</head>\r\n");
       out.write("<body>\r\n");
       out.write("\r\n");
